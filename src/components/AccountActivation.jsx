@@ -13,10 +13,14 @@ function AccountActivation() {
       try {
         await activateAccount(activationCode);
         setStatus('success');
-        setTimeout(() => navigate('/login'), 300000); // 3 Sekunden warten, dann zurück zum Login
+        setTimeout(() => navigate('/login'), 3000); 
       } catch (error) {
-        setStatus('error');
-        setTimeout(() => navigate('/login'), 300000);
+        if (error.response?.data?.error === 'Ungültiger oder bereits verwendeter Aktivierungslink.') {
+          setStatus('success');
+        } else {
+          setStatus('error');
+        }
+        setTimeout(() => navigate('/login'), 3000);
       }
     };
     activate();
@@ -35,7 +39,7 @@ function AccountActivation() {
     <div className={styles.loginpage}>
       <div className={styles.overlay}>
         <div className={styles.container}>
-          <h2>{message}</h2>
+          <h2 className={styles.centerText}>{message}</h2>
         </div>
       </div>
     </div>
