@@ -1,0 +1,22 @@
+.rowContainer {
+    padding: 20px 40px;
+}
+
+.videoRow {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.thumbnail {
+    width: 180px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.2s;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+}

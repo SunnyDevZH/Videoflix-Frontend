@@ -1,0 +1,50 @@
+.textPage {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.arrowBackIcon {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    cursor: pointer;
+    height: 25px;
+    z-index: 10; 
+}
+
+.textPageContent {
+    margin: 80px;
+}
+
+.textSection {
+    margin-bottom: 30px;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.blue {
+    color: #007bff;
+}
+
+.footer{
+    position: flex !important;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 12;
+}

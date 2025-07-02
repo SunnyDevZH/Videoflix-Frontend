@@ -1,0 +1,12 @@
+.loginpage {
+    position: relative;
+    height: 100vh;
+    background-image: url('../../assets/images/background-two.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.loginLinks {
+    margin-top: 20px;
+}

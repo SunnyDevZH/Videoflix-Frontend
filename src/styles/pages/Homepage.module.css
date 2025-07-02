@@ -1,0 +1,56 @@
+.homepage {
+    position: relative;
+    height: 100vh;
+    background-image: url('/src/assets/images/background-one.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+
+}
+
+.overlay {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4) 80%, rgba(0, 0, 0, 0.4) 80%, rgba(0, 0, 0, 1));
+    z-index: 1;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.input input {
+    width: 100%;
+    background: #1C1A20CC;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid white;
+    border-radius: 20px;
+    width: 300px;
+
+}
+
+.input input::placeholder {
+    color: white;
+}
+
+/* Responsivität für kleinere Bildschirme */
+@media screen and (max-width: 390px) {
+  
+    form {
+        flex-direction: column; /* Stapelt die Eingabefelder und Buttons */
+        gap: 15px;
+    }
+
+    .input input {
+        width: 100%; /* Eingabefelder nehmen die volle Breite ein */
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+}
