@@ -73,7 +73,7 @@ function Signup() {
             </div>
             {showToast && (
                 <SuccessToast
-                    message="Registrierung erfolgreich! Bitte bestätige deine E-Mail über den Link, den wir dir gesendet haben."
+                    message="Registrierung erfolgreich! Bitte bestätige deine E-Mail über den Link."
                     onClose={() => setShowToast(false)}
                 />
             )}
