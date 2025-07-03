@@ -19,12 +19,6 @@ export const refreshToken = async (refresh) => {
 };
 
 export const activateAccount = async (activationCode) => {
-  try {
     const response = await API.get(`api/accounts/activate/${activationCode}/`);
-    console.log('Activation response:', response);
     return response.data;
-  } catch (error) {
-    console.error('Activation error:', error.response ? error.response.data : error.message);
-    throw error;
-  }
 };
