@@ -16,22 +16,31 @@ function VideoOfferPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        Promise.all([
+        // Promise für Daten laden
+        const fetchData = Promise.all([
             fetch(`${CURRENT_URL}api/videos/`).then(res => res.json()),
             fetch(`${CURRENT_URL}api/videos/categories/`).then(res => res.json())
-        ])
-        .then(([videosData, categoriesData]) => {
-            setVideos(videosData);
-            setCategories(categoriesData);
+        ]);
 
-            if (videosData.length > 0) {
-                const randomIndex = Math.floor(Math.random() * videosData.length);
-                setHeroVideo(videosData[randomIndex]);
-            }
-        })
-        .catch((err) => {
-            console.error("Fehler beim Laden der Daten:", err);
-        });
+        // Promise für künstliches Delay (z.B. 2 Sekunden)
+        const delay = new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Beide Promises abwarten
+        Promise.all([fetchData, delay])
+            .then(([[videosData, categoriesData]]) => {
+                setVideos(videosData);
+                setCategories(categoriesData);
+
+                if (videosData.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * videosData.length);
+                    setHeroVideo(videosData[randomIndex]);
+                }
+                setIsLoading(false); // Loader ausblenden
+            })
+            .catch((err) => {
+                console.error("Fehler beim Laden der Daten:", err);
+                setIsLoading(false); // Auch bei Fehler Loader ausblenden
+            });
     }, []);
 
     useEffect(() => {
@@ -52,13 +61,6 @@ function VideoOfferPage() {
         });
 
         setVideosByCategory(grouped);
-
-        // Nach 6 Sekunden den Loader ausblenden
-        const timeout = setTimeout(() => {
-            setIsLoading(false);
-        }, 10000);
-
-        return () => clearTimeout(timeout);
     }, [categories, videos]);
 
     const handleLogout = () => {
@@ -89,6 +91,14 @@ function VideoOfferPage() {
                     title={heroVideo?.title}
                     description={heroVideo?.description}
                 />
+
+                {/* Zeige Hinweis, wenn keine Videos vorhanden sind */}
+                {!isLoading && videos.length === 0 && (
+                    <div className={styles.noVideos}>
+                        <h2>Keine Videos vorhanden</h2>
+                        <p>Es wurden noch keine Videos hochgeladen.</p>
+                    </div>
+                )}
 
                 {Object.entries(videosByCategory).map(([category, vids]) => (
                     <section key={category} className={styles.categorySection}>
