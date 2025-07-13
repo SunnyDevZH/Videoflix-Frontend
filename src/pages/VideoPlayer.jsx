@@ -9,10 +9,18 @@ import { CURRENT_URL } from '../api/api';
 
 function VideoPlayer({ title, thumbnail, onBack, resolutions }) {
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-    const [currentResolution, setCurrentResolution] = useState("720p");
+    const [currentResolution, setCurrentResolution] = useState(null);
     const hideTimer = useRef(null);
 
-    const videoUrl = resolutions[currentResolution];
+    // Setze initial die erste verfügbare Auflösung als Standard
+    useEffect(() => {
+        const availableResolutions = Object.entries(resolutions).filter(([_, url]) => url);
+        if (availableResolutions.length > 0) {
+            setCurrentResolution(availableResolutions[0][0]);
+        }
+    }, [resolutions]);
+
+    const videoUrl = currentResolution ? resolutions[currentResolution] : null;
 
     useEffect(() => {
         const handleActivity = () => {
@@ -55,27 +63,33 @@ function VideoPlayer({ title, thumbnail, onBack, resolutions }) {
             <div className={styles.resolutionSelector}>
                 <label>Auflösung:</label>
                 <select
-                    value={currentResolution}
+                    value={currentResolution || ''}
                     onChange={(e) => setCurrentResolution(e.target.value)}
                 >
-                    {Object.keys(resolutions).map((res) => (
-                        <option key={res} value={res}>
-                            {res}
-                        </option>
-                    ))}
+                    {Object.entries(resolutions)
+                        .filter(([_, url]) => url) // Nur verfügbare URLs zeigen
+                        .map(([res, _]) => (
+                            <option key={res} value={res}>
+                                {res}
+                            </option>
+                        ))}
                 </select>
             </div>
 
-            {/* Video Element */}
-            <video
-                className={styles.videoElement}
-                controls
-                autoPlay={true}
-                src={videoUrl}
-                poster={thumbnail}
-            >
-                Your browser does not support the video tag.
-            </video>
+            {/* Video Element oder Hinweis wenn kein Video verfügbar */}
+            {videoUrl ? (
+                <video
+                    className={styles.videoElement}
+                    controls
+                    autoPlay
+                    src={videoUrl}
+                    poster={thumbnail}
+                >
+                    Your browser does not support the video tag.
+                </video>
+            ) : (
+                <p>Video ist nicht verfügbar.</p>
+            )}
         </div>
     );
 }
@@ -102,7 +116,7 @@ function VideoPlayerPage() {
             <VideoPlayer
                 resolutions={video.resolutions}
                 title={video.title}
-                thumbnail={video.thumbnail}
+                thumbnail={video.thumbnail_url}
                 onBack={() => navigate('/video-offer')}
             />
         </div>
