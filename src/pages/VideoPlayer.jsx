@@ -1,3 +1,5 @@
+// src/pages/VideoPlayerPage.jsx
+
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../styles/pages/VideoPlayer.module.css';
@@ -5,9 +7,12 @@ import arrowBackIcon from '../assets/icons/arrow_back.svg';
 import symbolIcon from '../assets/icons/Symbol.svg';
 import { CURRENT_URL } from '../api/api';
 
-function VideoPlayer({ videoUrl, title, thumbnail, onBack }) {
+function VideoPlayer({ title, thumbnail, onBack, resolutions }) {
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+    const [currentResolution, setCurrentResolution] = useState("720p");
     const hideTimer = useRef(null);
+
+    const videoUrl = resolutions[currentResolution];
 
     useEffect(() => {
         const handleActivity = () => {
@@ -20,12 +25,12 @@ function VideoPlayer({ videoUrl, title, thumbnail, onBack }) {
         };
 
         window.addEventListener('mousemove', handleActivity);
-        window.addEventListener('touchstart', handleActivity); // <- Neu hinzugefügt
+        window.addEventListener('touchstart', handleActivity);
         handleActivity();
 
         return () => {
             window.removeEventListener('mousemove', handleActivity);
-            window.removeEventListener('touchstart', handleActivity); // <- Neu hinzugefügt
+            window.removeEventListener('touchstart', handleActivity);
             if (hideTimer.current) clearTimeout(hideTimer.current);
         };
     }, []);
@@ -46,7 +51,22 @@ function VideoPlayer({ videoUrl, title, thumbnail, onBack }) {
                 <img src={symbolIcon} alt="Symbol" className={styles.symbolIcon} />
             </div>
 
-            {/* Video Player */}
+            {/* Auflösungs-Dropdown */}
+            <div className={styles.resolutionSelector}>
+                <label>Auflösung:</label>
+                <select
+                    value={currentResolution}
+                    onChange={(e) => setCurrentResolution(e.target.value)}
+                >
+                    {Object.keys(resolutions).map((res) => (
+                        <option key={res} value={res}>
+                            {res}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Video Element */}
             <video
                 className={styles.videoElement}
                 controls
@@ -80,7 +100,7 @@ function VideoPlayerPage() {
     return (
         <div>
             <VideoPlayer
-                videoUrl={video.video_url}
+                resolutions={video.resolutions}
                 title={video.title}
                 thumbnail={video.thumbnail}
                 onBack={() => navigate('/video-offer')}
