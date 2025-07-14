@@ -126,4 +126,31 @@
     margin-bottom: 1rem;
     animation: spin 2s linear infinite;
   }
-  
+
+  .videoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    background: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
+.videoPreview {
+    width: 220px;
+    height: 140px;
+    object-fit: cover;
+    background: #000;
+}
+
+.cardVideoTitle {
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    margin: 8px 0 12px 0;
+    word-break: break-word;
+    cursor: pointer;
+}

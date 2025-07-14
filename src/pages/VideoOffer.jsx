@@ -106,11 +106,23 @@ function VideoOfferPage() {
                         <div className={styles.horizontalScroll}>
                             {vids.length === 0 && <p>Keine Videos in dieser Kategorie</p>}
                             {vids.map(video => (
-                                <VideoThumbnail
+                                <div
                                     key={video.id}
-                                    video={video}
+                                    className={styles.videoCard}
                                     onClick={() => onVideoClick(video.id)}
-                                />
+                                >
+                                    {/* Video-Preview oder Thumbnail */}
+                                    <video
+                                        src={video.video_file}
+                                        className={styles.videoPreview}
+                                        controls={false}
+                                        muted
+                                        width={220}
+                                        height={140}
+                                        poster={video.thumbnail}
+                                    />
+                                    <p className={styles.cardVideoTitle}>{video.title}</p>
+                                </div>
                             ))}
                         </div>
                     </section>
