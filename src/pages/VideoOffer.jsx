@@ -87,7 +87,7 @@ function VideoOfferPage() {
 
                 <HeroVideo
                     videoId={heroVideo?.id}
-                    videoUrl={heroVideo?.video_url}
+                    videoUrl={heroVideo?.video_file} // <--- Ändere das Feld hier!
                     title={heroVideo?.title}
                     description={heroVideo?.description}
                 />

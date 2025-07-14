@@ -2,53 +2,59 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 import styles from '../styles/pages/VideoPlayer.module.css';
 import arrowBackIcon from '../assets/icons/arrow_back.svg';
 import symbolIcon from '../assets/icons/Symbol.svg';
 import { CURRENT_URL } from '../api/api';
 
-function VideoPlayer({ title, thumbnail, onBack, resolutions }) {
-    const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-    const [currentResolution, setCurrentResolution] = useState(null);
-    const hideTimer = useRef(null);
+function VideoPlayer({ title, thumbnail, onBack, resolutions, videoFile }) {
+    const videoRef = useRef(null);
+    const playerRef = useRef(null);
 
-    // Setze initial die erste verfügbare Auflösung als Standard
+    // Quellen für verschiedene Auflösungen zusammenstellen
+    const sources = Object.entries(resolutions)
+        .filter(([_, url]) => url)
+        .map(([label, url]) => ({
+            src: url,
+            type: 'video/mp4',
+            label: label
+        }));
+
+    // Fallback auf Originaldatei
+    if (sources.length === 0 && videoFile) {
+        sources.push({
+            src: videoFile,
+            type: 'video/mp4',
+            label: 'Original'
+        });
+    }
+
     useEffect(() => {
-        const availableResolutions = Object.entries(resolutions).filter(([_, url]) => url);
-        if (availableResolutions.length > 0) {
-            setCurrentResolution(availableResolutions[0][0]);
+        if (!playerRef.current) {
+            playerRef.current = videojs(videoRef.current, {
+                controls: true,
+                autoplay: true,
+                preload: 'auto',
+                poster: thumbnail,
+                sources: sources
+            });
+        } else {
+            playerRef.current.src(sources);
         }
-    }, [resolutions]);
-
-    const videoUrl = currentResolution ? resolutions[currentResolution] : null;
-
-    useEffect(() => {
-        const handleActivity = () => {
-            setIsHeaderVisible(true);
-            if (hideTimer.current) clearTimeout(hideTimer.current);
-
-            hideTimer.current = setTimeout(() => {
-                setIsHeaderVisible(false);
-            }, 3000);
-        };
-
-        window.addEventListener('mousemove', handleActivity);
-        window.addEventListener('touchstart', handleActivity);
-        handleActivity();
-
         return () => {
-            window.removeEventListener('mousemove', handleActivity);
-            window.removeEventListener('touchstart', handleActivity);
-            if (hideTimer.current) clearTimeout(hideTimer.current);
+            if (playerRef.current) {
+                playerRef.current.dispose();
+                playerRef.current = null;
+            }
         };
-    }, []);
+    }, [sources, thumbnail]);
 
     return (
         <div className={styles.videoPlayerPage}>
             {/* Header */}
-            <div
-                className={`${styles.header} ${isHeaderVisible ? styles.visible : styles.hidden}`}
-            >
+            <div className={styles.header}>
                 <img
                     src={arrowBackIcon}
                     alt="Back"
@@ -59,37 +65,14 @@ function VideoPlayer({ title, thumbnail, onBack, resolutions }) {
                 <img src={symbolIcon} alt="Symbol" className={styles.symbolIcon} />
             </div>
 
-            {/* Auflösungs-Dropdown */}
-            <div className={styles.resolutionSelector}>
-                <label>Auflösung:</label>
-                <select
-                    value={currentResolution || ''}
-                    onChange={(e) => setCurrentResolution(e.target.value)}
-                >
-                    {Object.entries(resolutions)
-                        .filter(([_, url]) => url) // Nur verfügbare URLs zeigen
-                        .map(([res, _]) => (
-                            <option key={res} value={res}>
-                                {res}
-                            </option>
-                        ))}
-                </select>
-            </div>
-
-            {/* Video Element oder Hinweis wenn kein Video verfügbar */}
-            {videoUrl ? (
+            {/* Video Element */}
+            <div className={styles.videoWrapper}>
                 <video
-                    className={styles.videoElement}
-                    controls
-                    autoPlay
-                    src={videoUrl}
-                    poster={thumbnail}
-                >
-                    Your browser does not support the video tag.
-                </video>
-            ) : (
-                <p>Video ist nicht verfügbar.</p>
-            )}
+                    ref={videoRef}
+                    className="video-js vjs-big-play-centered"
+                    playsInline
+                />
+            </div>
         </div>
     );
 }
@@ -115,6 +98,7 @@ function VideoPlayerPage() {
         <div>
             <VideoPlayer
                 resolutions={video.resolutions}
+                videoFile={video.video_file}
                 title={video.title}
                 thumbnail={video.thumbnail_url}
                 onBack={() => navigate('/video-offer')}
