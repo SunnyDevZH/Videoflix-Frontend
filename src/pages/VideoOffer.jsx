@@ -5,7 +5,7 @@ import VideoThumbnail from '../components/VideoThumbnail';
 import styles from '../styles/pages/VideoOffer.module.css';
 import logo from '../assets/icons/symbol.svg';
 import logoutIcon from '../assets/icons/logout.svg';
-import { CURRENT_URL } from '../api/api'; // Importiere die Basis-URL
+import { CURRENT_URL } from '../api/api'; 
 
 function VideoOfferPage() {
     const navigate = useNavigate();
@@ -16,16 +16,13 @@ function VideoOfferPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Promise für Daten laden
         const fetchData = Promise.all([
             fetch(`${CURRENT_URL}api/videos/`).then(res => res.json()),
             fetch(`${CURRENT_URL}api/videos/categories/`).then(res => res.json())
         ]);
 
-        // Promise für künstliches Delay (z.B. 2 Sekunden)
         const delay = new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Beide Promises abwarten
         Promise.all([fetchData, delay])
             .then(([[videosData, categoriesData]]) => {
                 setVideos(videosData);
@@ -35,11 +32,11 @@ function VideoOfferPage() {
                     const randomIndex = Math.floor(Math.random() * videosData.length);
                     setHeroVideo(videosData[randomIndex]);
                 }
-                setIsLoading(false); // Loader ausblenden
+                setIsLoading(false); 
             })
             .catch((err) => {
                 console.error("Fehler beim Laden der Daten:", err);
-                setIsLoading(false); // Auch bei Fehler Loader ausblenden
+                setIsLoading(false); 
             });
     }, []);
 
@@ -87,7 +84,7 @@ function VideoOfferPage() {
 
                 <HeroVideo
                     videoId={heroVideo?.id}
-                    videoUrl={heroVideo?.video_file} // <--- Ändere das Feld hier!
+                    videoUrl={heroVideo?.video_file} 
                     title={heroVideo?.title}
                     description={heroVideo?.description}
                 />

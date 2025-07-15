@@ -40,16 +40,15 @@ form {
     color: white;
 }
 
-/* Responsivität für kleinere Bildschirme */
 @media screen and (max-width: 390px) {
   
     form {
-        flex-direction: column; /* Stapelt die Eingabefelder und Buttons */
+        flex-direction: column; 
         gap: 15px;
     }
 
     .input input {
-        width: 100%; /* Eingabefelder nehmen die volle Breite ein */
+        width: 100%; 
         font-size: 14px;
         padding: 8px 10px;
     }

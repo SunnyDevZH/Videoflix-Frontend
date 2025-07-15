@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/pages/ResetPassword.module.css';
-import SuccessToast from '../components/SuccessToast'; // Importiere die SuccessToast-Komponente
+import SuccessToast from '../components/SuccessToast'; 
 
 function ResetPassword() {
     const [email, setEmail] = useState('');
@@ -8,7 +8,7 @@ function ResetPassword() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const [showToast, setShowToast] = useState(false); // Zustand für die Toast-Benachrichtigung
+    const [showToast, setShowToast] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,11 +30,11 @@ function ResetPassword() {
             const data = await response.json();
 
             if (!response.ok) {
-                setError(data.error || 'Invalid code or user.'); // Fehlermeldung auf Deutsch
+                setError(data.error || 'Invalid code or user.'); 
                 return;
             }
 
-            setShowToast(true); // Zeige die Toast-Benachrichtigung an
+            setShowToast(true); 
             setError('');
             setEmail('');
             setCode('');
@@ -50,12 +50,12 @@ function ResetPassword() {
             <div className="overlay">
                 <div className="container">
                     <h1>Reset password</h1>
-                    <p>Create a new password for your Videoflix account.</p>
+                    <p>Erstelle ein neues Passwort für dein Videoflix-Konto.</p>
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="input">
                             <input
                                 type="email"
-                                placeholder="Your email"
+                                placeholder="E-Mail"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={styles.inputField}
@@ -65,7 +65,7 @@ function ResetPassword() {
                         <div className="input">
                             <input
                                 type="password"
-                                placeholder="Enter the 6-digit code"
+                                placeholder="Gib den 6-stelligen Code ein"
                                 value={code}
                                 onChange={(e) => setCode(e.target.value)}
                                 className={styles.inputField}
@@ -75,7 +75,7 @@ function ResetPassword() {
                         <div className="input">
                             <input
                                 type="password"
-                                placeholder="Enter a new password"
+                                placeholder="Gib ein neues Passwort ein"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className={styles.inputField}
@@ -85,7 +85,7 @@ function ResetPassword() {
                         <div className="input">
                             <input
                                 type="password"
-                                placeholder="Confirm new password"
+                                placeholder="Neues Passwort bestätigen"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 className={styles.inputField}
@@ -93,13 +93,13 @@ function ResetPassword() {
                             />
                         </div>
                         {error && <p className="errorMessage">{error}</p>} 
-                        <button type="submit">Reset my password</button>
+                        <button type="submit">Passwort zurücksetzen</button>
                     </form>
                 </div>
             </div>
             {showToast && (
                 <SuccessToast
-                    message="Password reset successfully!"
+                    message="Passwort wurde erfolgreich zurückgesetzt!"
                     onClose={() => setShowToast(false)} // Schließe die Toast-Benachrichtigung
                 />
             )}

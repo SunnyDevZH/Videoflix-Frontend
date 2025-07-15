@@ -9,13 +9,12 @@
   padding-bottom: 10px;
     background-color: black;
 
-  padding-left: 20px;  /* Abstand vom linken Rand */
-  padding-right: 20px; /* Abstand vom rechten Rand */
-  padding-top: 20px;   /* Abstand oben */
-  padding-bottom: 10px; /* Abstand unten */
+  padding-left: 20px;  
+  padding-right: 20px; 
+  padding-top: 20px;   
+  padding-bottom: 10px; 
 }
 
-/* Zurück Button links */
 .backButton {
   background: blue;
   border: none;
@@ -30,7 +29,6 @@
   height: 24px;
 }
 
-/* Titel mittig - nimmt so viel Platz wie möglich */
 .title {
   flex-grow: 1;
   font-size: 1.5rem;
@@ -41,7 +39,6 @@
   text-overflow: ellipsis;
 }
 
-/* Auflösungsauswahl rechts neben Titel */
 .resolutionSelector {
   display: flex;
   align-items: center;
@@ -60,13 +57,11 @@
   font-size: 1rem;
 }
 
-/* Logo ganz rechts */
 .logo {
   width: 40px;
   height: 40px;
 }
 
-/* Video */
 .videoPlayer {
   width: 100%;
   max-height: 500px;
@@ -77,7 +72,6 @@
   margin-right: auto;
 }
 
-/* Beschreibung */
 .description {
   margin-top: 15px;
   font-size: 1rem;
@@ -109,7 +103,7 @@
 
 .resolutionSelect:focus {
   outline: none;
-  border-color: #0056b3; /* Dunkleres Blau beim Fokus */
+  border-color: #0056b3; 
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 .resolutionSelect{
@@ -117,7 +111,6 @@
     width: 100px;
 }
 
-/* Loader */
 .loader {
   text-align: center;
   margin-top: 50px;

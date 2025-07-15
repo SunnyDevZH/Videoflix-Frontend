@@ -5,28 +5,28 @@ import arrowIcon from '../assets/icons/chevron_right.svg';
 
 
 function Homepage() {
-    const [email, setEmail] = useState(''); // State für die E-Mail
+    const [email, setEmail] = useState(''); 
     const navigate = useNavigate();
 
     const handleSignUp = (e) => {
-        e.preventDefault(); // Verhindert das Neuladen der Seite
-        navigate('/signup', { state: { email } }); // E-Mail an Signup-Seite übergeben
+        e.preventDefault(); 
+        navigate('/signup', { state: { email } }); 
     };
 
     return (
         <div className={styles.homepage}>
             <div className={styles.overlay}>
                 <div className={styles.content}>
-                    <h1>Movies, TV shows, and more</h1>
-                    <p>Enter your email to create or restart your subscription.</p>
+                    <h1>Movies, Shows und mehr!</h1>
+                    <p>Gib deine E-Mail-Adresse ein, um gratis ein Konto zu erstellen.</p>
                     <form className={styles.form} onSubmit={handleSignUp}>
                         <div className={styles.input}>
                             <input
                                 type="email"
                                 id="email"
                                 placeholder="Email Address"
-                                value={email} // Verknüpfe den State mit dem Inputfeld
-                                onChange={(e) => setEmail(e.target.value)} // Aktualisiere den State bei Eingabe
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
                                 required
                             />
                         </div>

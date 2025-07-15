@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Importiere useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import styles from '../styles/pages/TextPage.module.css';
-import arrowBackIcon from '../assets/icons/arrow_back.svg'; // Importiere das SVG-Bild
+import arrowBackIcon from '../assets/icons/arrow_back.svg'; 
 
 function TextPage() {
-    const navigate = useNavigate(); // Initialisiere useNavigate
+    const navigate = useNavigate(); 
 
     return (
         <div className={styles.textPage}>
@@ -12,7 +12,7 @@ function TextPage() {
                 src={arrowBackIcon}
                 alt="Back"
                 className={styles.arrowBackIcon}
-                onClick={() => navigate('/login')} // Navigiere zur Login-Seite
+                onClick={() => navigate('/login')} 
             />
             <main className={styles.textPageContent}>
                 <section className={styles.textSection}>

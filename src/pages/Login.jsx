@@ -9,7 +9,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [showToast, setShowToast] = useState(false); // 2. Toast-State
+    const [showToast, setShowToast] = useState(false); 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -19,10 +19,10 @@ function Login() {
             localStorage.setItem('access_token', response.access);
             localStorage.setItem('refresh_token', response.refresh);
             setError('');
-            setShowToast(true); // 3. Toast anzeigen
-            setTimeout(() => navigate('/video-offer'), 2000); // 4. Nach 2s weiterleiten
+            setShowToast(true); 
+            setTimeout(() => navigate('/video-offer'), 2000); 
         } catch (err) {
-            setError('Invalid email or password.');
+            setError('Falsches Passwort oder E-Mail');
         }
     };
 
@@ -66,7 +66,7 @@ function Login() {
             </div>
             {showToast && (
                 <SuccessToast
-                    message="Login Successful"
+                    message="Login Erfolgreich!"
                     onClose={() => setShowToast(false)}
                 />
             )}

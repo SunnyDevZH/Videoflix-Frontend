@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Importiere useNavigate
+import { useNavigate, useLocation } from 'react-router-dom'; 
 import styles from '../styles/pages/Signup.module.css';
 import { registerUser } from '../api/auth';
 import SuccessToast from '../components/SuccessToast';
 
 function Signup() {
-    const location = useLocation(); // E-Mail aus dem state auslesen
-    const [email, setEmail] = useState(location.state?.email || ''); // E-Mail übernehmen
+    const location = useLocation(); 
+    const [email, setEmail] = useState(location.state?.email || ''); 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [showToast, setShowToast] = useState(false);
-    const navigate = useNavigate(); // Initialisiere useNavigate
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setError('Passwords must match.');
+            setError('Die Passwörter müssen übereinstimmen.');
         } else {
             try {
                 setError('');
@@ -24,7 +24,7 @@ function Signup() {
                 setShowToast(true);
                 setTimeout(() => navigate('/login'), 2000);
             } catch (err) {
-                setError(err?.message || 'An error occurred during registration.');
+                setError(err?.message || 'Bei der Registrierung ist ein Fehler aufgetreten.');
             }
         }
     };
@@ -40,7 +40,7 @@ function Signup() {
                             <input
                                 type="email"
                                 id="email"
-                                placeholder="Email Address"
+                                placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -50,7 +50,7 @@ function Signup() {
                             <input
                                 type="password"
                                 id="password"
-                                placeholder="Password"
+                                placeholder="Passwort"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -60,7 +60,7 @@ function Signup() {
                             <input
                                 type="password"
                                 id="confirm-password"
-                                placeholder="Confirm Password"
+                                placeholder="Passwort bestätigen"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
@@ -73,7 +73,7 @@ function Signup() {
             </div>
             {showToast && (
                 <SuccessToast
-                    message="Registrierung erfolgreich! Bitte bestätige deine E-Mail über den Link."
+                    message="Registrierung erfolgreich! Bitte bestätige deine E-Mail."
                     onClose={() => setShowToast(false)}
                 />
             )}

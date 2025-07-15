@@ -10,19 +10,18 @@ function VideoPlayer() {
   const navigate = useNavigate();
 
   const [video, setVideo] = useState(null);
-  const [selectedResolution, setSelectedResolution] = useState('720p'); // nur "720p", "360p" etc.
+  const [selectedResolution, setSelectedResolution] = useState('720p'); 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${CURRENT_URL}api/videos/${videoId}/`)
       .then(res => res.json())
       .then(data => {
-        // Da dein Beispiel ein Array ist, hole das erste Element
+    
         const videoData = Array.isArray(data) ? data[0] : data;
 
         setVideo(videoData);
 
-        // Standard-Resolution wählen, falls vorhanden
         if (!videoData.resolutions['720p']) {
           if (videoData.resolutions['480p']) setSelectedResolution('480p');
           else if (videoData.resolutions['360p']) setSelectedResolution('360p');

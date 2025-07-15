@@ -8,7 +8,7 @@ export const registerUser = async (email, password) => {
 
 // Benutzer einloggen
 export const loginUser = async (email, password) => {
-  const response = await API.post('api/accounts/token/', { username: email, password }); // Username ist die E-Mail
+  const response = await API.post('api/accounts/token/', { username: email, password }); 
   return response.data;
 };
 
@@ -18,6 +18,7 @@ export const refreshToken = async (refresh) => {
   return response.data;
 };
 
+// Account aktivieren
 export const activateAccount = async (activationCode) => {
     const response = await API.get(`api/accounts/activate/${activationCode}/`);
     return response.data;
