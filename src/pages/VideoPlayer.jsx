@@ -1,53 +1,95 @@
-// src/components/VideoPlayer.jsx
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../styles/pages/VideoPlayer.module.css';
-import arrowBackIcon from '../assets/icons/arrow_back.svg';
-import symbolIcon from '../assets/icons/Symbol.svg';
+import logo from '../assets/icons/symbol.svg';
+import arrowBack from '../assets/icons/arrow_back.svg';
+import { CURRENT_URL } from '../api/api';
 
-function VideoPlayer({ title, thumbnail, onBack, resolutions = {}, videoFile }) {
-    // resolutions: { '1080p': url1, '720p': url2, ... }
-    const sources = Object.entries(resolutions).length > 0
-        ? Object.entries(resolutions).map(([label, url]) => ({ label, url }))
-        : [{ label: 'Original', url: videoFile }];
+function VideoPlayer() {
+  const { videoId } = useParams();
+  const navigate = useNavigate();
 
-    const [currentSource, setCurrentSource] = useState(sources[0].url);
+  const [video, setVideo] = useState(null);
+  const [selectedResolution, setSelectedResolution] = useState('720p'); // nur "720p", "360p" etc.
+  const [isLoading, setIsLoading] = useState(true);
 
-    return (
-        <div className={styles.videoPlayerPage}>
-            <div className={styles.header}>
-                <img
-                    src={arrowBackIcon}
-                    alt="Back"
-                    className={styles.backButton}
-                    onClick={onBack}
-                />
-                <p className={styles.videoTitle}>{title}</p>
-                <select
-                    value={currentSource}
-                    onChange={e => setCurrentSource(e.target.value)}
-                    style={{ marginRight: 16 }}
-                >
-                    {sources.map(source => (
-                        <option key={source.label} value={source.url}>
-                            {source.label}
-                        </option>
-                    ))}
-                </select>
-                <img src={symbolIcon} alt="Symbol" className={styles.symbolIcon} />
+  useEffect(() => {
+    fetch(`${CURRENT_URL}api/videos/${videoId}/`)
+      .then(res => res.json())
+      .then(data => {
+        // Da dein Beispiel ein Array ist, hole das erste Element
+        const videoData = Array.isArray(data) ? data[0] : data;
+
+        setVideo(videoData);
+
+        // Standard-Resolution wählen, falls vorhanden
+        if (!videoData.resolutions['720p']) {
+          if (videoData.resolutions['480p']) setSelectedResolution('480p');
+          else if (videoData.resolutions['360p']) setSelectedResolution('360p');
+          else setSelectedResolution(null);
+        } else {
+          setSelectedResolution('720p');
+        }
+
+        setIsLoading(false);
+      })
+      .catch(() => setIsLoading(false));
+  }, [videoId]);
+
+  const handleBack = () => navigate(-1);
+
+  const handleResolutionChange = (e) => setSelectedResolution(e.target.value);
+
+  return (
+    <div className={styles.videoPlayerPage}>
+      <header className={styles.header}>
+        <button onClick={handleBack} className={styles.backButton} aria-label="Zurück">
+          <img src={arrowBack} alt="Zurück" className={styles.backIcon} />
+        </button>
+
+        <h1 className={styles.title}>{video?.title || '...'}</h1>
+
+        <img src={logo} alt="Logo" className={styles.logo} />
+      </header>
+
+      {isLoading ? (
+        <div className={styles.loader}>Lade Video...</div>
+      ) : video ? (
+        <>
+          <video
+            controls
+            autoPlay
+            className={styles.videoPlayer}
+            src={selectedResolution ? video.resolutions[selectedResolution] : video.video_file}
+            poster={video.thumbnail_url}
+          />
+
+          <div className={styles.descriptionAndResolution}>
+            <p className={styles.description}>Beschreibung: {video.description}</p>
+
+            <div className={styles.resolutionSelector}>
+              <label htmlFor="resolution" className={styles.resolutionLabel}>Auflösung:</label>
+              <select
+                id="resolution"
+                value={selectedResolution || ''}
+                onChange={handleResolutionChange}
+                className={styles.resolutionSelect}
+              >
+                {video.resolutions && Object.keys(video.resolutions).map((res) => (
+                  <option key={res} value={res}>
+                    {res}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className={styles.videoWrapper}>
-                <video
-                    src={currentSource}
-                    poster={thumbnail}
-                    controls
-                    autoPlay
-                    playsInline
-                    style={{ width: '100%', height: '100%' }}
-                />
-            </div>
-        </div>
-    );
+          </div>
+        </>
+      ) : (
+        <div>Video nicht gefunden.</div>
+      )}
+    </div>
+  );
 }
 
 export default VideoPlayer;
+

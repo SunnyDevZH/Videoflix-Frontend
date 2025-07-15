@@ -1,87 +1,122 @@
-.videoPlayerPage {
-    width: 100vw;
-    height: 100vh;
+:root{
     background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.videoElement {
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    object-fit: cover;
-}
-
-.videoOverlay {
-    position: absolute;
-    bottom: 0;
-    padding: 20px;
-    color: white;
-    text-align: center;
-}
-
-.videoTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.backButton {
-    left: 20px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.symbolIcon {
-    width: 20px;
-    height: 20px;
-    z-index: 10;
 }
 
 .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 1) 10%, /* Komplett schwarz beginnt bei 10% */
-        rgba(0, 0, 0, 0.8) 60%, /* Langsamer Übergang zu weniger Schwarz */
-        rgba(0, 0, 0, 0.7) 70%, /* Noch transparenter */
-        rgba(0, 0, 0, 0.6) 80%, /* Noch transparenter */
-        rgba(0, 0, 0, 0.4) 90%, /* Noch transparenter */
-        rgba(0, 0, 0, 0.2) 95% /* Komplett transparent am Ende */
-    
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 10px;
+    background-color: black;
 
-        
-    );
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-    z-index: 10;
-    box-sizing: border-box;
-
-    p {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
+  padding-left: 20px;  /* Abstand vom linken Rand */
+  padding-right: 20px; /* Abstand vom rechten Rand */
+  padding-top: 20px;   /* Abstand oben */
+  padding-bottom: 10px; /* Abstand unten */
 }
 
-.header.hidden {
-    opacity: 0;
-    visibility: hidden;
+/* Zurück Button links */
+.backButton {
+  background: blue;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.header.visible {
-    opacity: 1;
-    visibility: visible;
+.backIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Titel mittig - nimmt so viel Platz wie möglich */
+.title {
+  flex-grow: 1;
+  font-size: 1.5rem;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Auflösungsauswahl rechts neben Titel */
+.resolutionSelector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.resolutionLabel {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.resolutionSelect {
+  padding: 4px 8px;
+  font-size: 1rem;
+}
+
+/* Logo ganz rechts */
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+/* Video */
+.videoPlayer {
+  width: 100%;
+  max-height: 500px;
+  margin-top: 20px;
+  background: black;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Beschreibung */
+.description {
+  margin-top: 15px;
+  font-size: 1rem;
+  color:white;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.descriptionAndResolution {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+}
+
+.resolutionSelect {
+  padding: 8px;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  font-weight:lighter;
+  cursor: pointer;
+}
+
+.resolutionSelect:focus {
+  outline: none;
+  border-color: #0056b3; /* Dunkleres Blau beim Fokus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.resolutionSelect{
+    margin: 20px;
+    width: 100px;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
 }
