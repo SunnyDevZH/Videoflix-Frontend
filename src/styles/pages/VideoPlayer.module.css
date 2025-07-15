@@ -105,7 +105,6 @@
   color: black;
   font-weight:lighter;
   cursor: pointer;
-  height: 50px;
 }
 
 .resolutionSelect:focus {
