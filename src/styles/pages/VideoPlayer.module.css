@@ -85,6 +85,9 @@
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .descriptionAndResolution {
@@ -102,6 +105,7 @@
   color: black;
   font-weight:lighter;
   cursor: pointer;
+  height: 50px;
 }
 
 .resolutionSelect:focus {
@@ -119,4 +123,10 @@
   text-align: center;
   margin-top: 50px;
   font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .resolutionSelector {
+    display: none;
+  }
 }
