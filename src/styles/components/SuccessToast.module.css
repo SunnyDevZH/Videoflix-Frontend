@@ -18,3 +18,12 @@
         bottom: 80px;
     }
 }
+
+@media screen and (max-width: 390px) {
+    .toast {
+        max-width: 220px;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+

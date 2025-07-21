@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/pages/ResetPassword.module.css';
 import SuccessToast from '../components/SuccessToast'; 
 
@@ -9,6 +10,16 @@ function ResetPassword() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [showToast, setShowToast] = useState(false); 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (showToast) {
+            const timer = setTimeout(() => {
+                navigate('/login');
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [showToast, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,6 +64,7 @@ function ResetPassword() {
                     <p>Erstelle ein neues Passwort für dein Videoflix-Konto.</p>
                     <form className="form" onSubmit={handleSubmit}>
                         <div className="input">
+                            <span className="inputIcon" />
                             <input
                                 type="email"
                                 placeholder="E-Mail"
