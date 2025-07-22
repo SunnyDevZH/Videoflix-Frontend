@@ -47,6 +47,11 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: #aab6ff;
+    text-decoration: none
+}
+
 button {
     background-color: rgb(45, 62, 223);
     color: white;

@@ -9,22 +9,25 @@ function Signup() {
     const [email, setEmail] = useState(location.state?.email || ''); 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
     const [showToast, setShowToast] = useState(false);
     const navigate = useNavigate(); 
 
-    const handleSubmit = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            setError('Die Passwörter müssen übereinstimmen.');
-        } else {
-            try {
+        setError("");
+        try {
+            if (password !== confirmPassword) {
+                setError('Die Passwörter müssen übereinstimmen.');
+            } else {
                 setError('');
                 await registerUser(email, password);
                 setShowToast(true);
                 setTimeout(() => navigate('/login'), 2000);
-            } catch (err) {
-                setError(err?.message || 'Bei der Registrierung ist ein Fehler aufgetreten.');
+            }
+        } catch (err) {
+            if (err.response && err.response.status === 409) {
+                setError("Dein Benutzer oder Passwort ist schon vorhanden");
             }
         }
     };
@@ -34,7 +37,7 @@ function Signup() {
             <div className="overlay">
                 <div className="container">
                     <h1>Sign up</h1>
-                    <form className="form" onSubmit={handleSubmit}>
+                    <form className="form" onSubmit={handleSignup}>
                         <div className="input">
                             <span className="inputIcon" />
                             <input
@@ -66,7 +69,7 @@ function Signup() {
                                 required
                             />
                         </div>
-                        {error && <p className="errorMessage">{error}</p>}
+                        {error && <div className="errorMessage">{error}</div>}
                         <button type="submit" className={styles.signupButton}>Get Started</button>
                     </form>
                 </div>

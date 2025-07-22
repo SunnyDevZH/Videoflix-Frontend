@@ -5,33 +5,42 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding-bottom: 10px;
-    background-color: black;
+  gap: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  padding: 10px 10px;
+  transition: opacity 0.3s;
+  z-index: 2;
+  opacity: 1;
+  box-sizing: border-box;
+  min-height: 38px;
+}
 
-  padding-left: 20px;  
-  padding-right: 20px; 
-  padding-top: 20px;   
-  padding-bottom: 10px; 
+.headerHidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .backButton {
   background: blue;
   border: none;
   cursor: pointer;
-  padding: 10px;
+  padding: 4px;
   display: flex;
   align-items: center;
 }
 
 .backIcon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 
 .title {
   flex-grow: 1;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0;
   text-align: center;
   white-space: nowrap;
@@ -42,30 +51,37 @@
 .resolutionSelector {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
   white-space: nowrap;
+  padding-right: 20px;
 }
 
 .resolutionLabel {
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
+  font-size: 0.8rem;
   color: white;
 }
 
 .resolutionSelect {
-  padding: 4px 8px;
-  font-size: 1rem;
+  padding: 2px 6px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  font-weight: lighter;
+  cursor: pointer;
+  margin: 0 0 0 4px;
+  width: 70px;
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
 }
 
 .videoPlayer {
   width: 100%;
-  max-height: 500px;
-  margin-top: 20px;
+  max-height: 90vh;
   background: black;
   display: block;
   margin-left: auto;
@@ -76,8 +92,7 @@
   margin-top: 15px;
   font-size: 1rem;
   color:white;
-  max-width: 900px;
-  margin-left: auto;
+  margin-left: 20px;
   margin-right: auto;
   height: 50px;
   display: flex;
@@ -92,25 +107,11 @@
   padding: 0 0.5rem;
 }
 
-.resolutionSelect {
-  padding: 8px;
-  border-radius: 6px;
-  background-color: white;
-  color: black;
-  font-weight:lighter;
-  cursor: pointer;
-}
-
 .resolutionSelect:focus {
   outline: none;
   border-color: #0056b3; 
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
-.resolutionSelect{
-    margin: 20px;
-    width: 100px;
-}
-
 .loader {
   text-align: center;
   margin-top: 50px;
