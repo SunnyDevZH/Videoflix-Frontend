@@ -28,20 +28,32 @@ Das Frontend für die Videoflix-Plattform, entwickelt mit React und Vite. Es bie
 ## ⚙️ Installation und Setup
 
 ### 1. Repository klonen
+```bash
 git clone https://github.com/SunnyDevZH/videoflix-frontend
+```
+```bash
 cd videoflix-backend
+```
 
 ### 2. Abhängigkeiten installieren
+```bash
 npm install
+```
 
 ### 3. Entwicklungsserver starten
+```bash
 npm run dev
+```
 
 ### 4. Anwendung im Browser öffnen
+```bash
 Öffnen Sie die URL http://localhost:5173, um die Anwendung zu sehen.
+```
 
 ---
 
 ## 📧 Kontakt
+```bash
 Email: yannick.vaterlaus.dev@gmail.com
+```
 
