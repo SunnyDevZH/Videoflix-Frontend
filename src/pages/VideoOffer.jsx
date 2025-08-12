@@ -84,7 +84,12 @@ function VideoOfferPage() {
 
                 <HeroVideo
                     videoId={heroVideo?.id}
-                    videoUrl={heroVideo?.video_file} 
+                    videoUrl={
+                      heroVideo?.resolutions?.["1080p"] ||
+                      heroVideo?.video_file_url ||
+                      heroVideo?.video_file ||
+                      ""
+                    }
                     title={heroVideo?.title}
                     description={heroVideo?.description}
                 />
@@ -110,13 +115,18 @@ function VideoOfferPage() {
                                 >
                                     {/* Video-Preview oder Thumbnail */}
                                     <video
-                                        src={video.video_file}
-                                        className={styles.videoPreview}
-                                        controls={false}
-                                        muted
-                                        width={220}
-                                        height={140}
-                                        poster={video.thumbnail}
+                                      src={
+                                        video.resolutions?.["720p"] ||
+                                        video.video_file_url ||
+                                        video.video_file ||
+                                        ""
+                                      }
+                                      className={styles.videoPreview}
+                                      controls={false}
+                                      muted
+                                      width={220}
+                                      height={140}
+                                      poster={video.thumbnail}
                                     />
                                     <p className={styles.cardVideoTitle}>{video.title}</p>
                                 </div>
